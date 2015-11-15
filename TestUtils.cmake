@@ -12,7 +12,7 @@ macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
     add_test ( NAME ${_pyunit_separate_name}
       COMMAND ${PYTHON_EXECUTABLE} -B ${_filename} )
     set(_env "PYTHONPATH=${EXPORT_PYTHON}:$ENV{PYTHONPATH};LD_LIBRARY_PATH=${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH};MCVINE_DIR=${EXPORT_ROOT};PATH=${EXPORT_BIN}:$ENV{PATH}")
-    message("${part}: ${_env}")
+    # message("${part}: ${_env}")
     set_tests_properties ( ${_pyunit_separate_name} PROPERTIES 
       WORKING_DIRECTORY ${_test_src_dir}/${_directory}
       ENVIRONMENT "${_env}"
