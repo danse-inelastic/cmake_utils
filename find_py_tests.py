@@ -16,6 +16,8 @@ def skip(f):
             if get_value(line, 'skip'): return True
         elif line.startswith("long_test"):
             if get_value(line, 'long_test'): return True
+        elif line.startswith("interactive"):
+            return True
         continue
     return
 
