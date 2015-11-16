@@ -2,6 +2,7 @@
 # python unit tests
 macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
   # Add all of the individual tests so that they can be run in parallel
+  add_custom_target(test-${_testname_prefix}) # target alias for this test suite
   foreach ( part ${ARGN} )
     # message( ${part} )
     get_filename_component( _filename ${part} NAME )
@@ -12,6 +13,7 @@ macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
     # message( "name: ${_pyunit_separate_name}, cmd:${PYTHON_EXECUTABLE} -B ${_filename}, workdir:  ${_test_src_dir}/${_directory}" )
     add_test ( NAME ${_pyunit_separate_name}
       COMMAND ${PYTHON_EXECUTABLE} -B ${_filename} )
+    add_dependencies(test-${_testname_prefix} ${_pyunit_separate_name})
     # message("${part}: ${_env}")
     set_tests_properties ( ${_pyunit_separate_name} PROPERTIES 
       WORKING_DIRECTORY ${_test_src_dir}/${_directory}
