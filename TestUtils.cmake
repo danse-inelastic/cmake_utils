@@ -21,12 +21,18 @@ macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
 endmacro ( PYUNITTEST_ADD_TEST )
 
 macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
+  message("-- PYUNITTEST_ADD_TESTS_IN_DIR: ${_test_src_dir} ${_testname_prefix}")
   execute_process(
     # COMMAND find . -name *TestCase.py
-    COMMAND ${EXPORT_ENVVARS} ${CMAKE_BINARY_DIR}/cmake_utils/find_py_tests.py . *TestCase.py
+    COMMAND ${CMAKE_BINARY_DIR}/cmake_utils/find_py_tests.py . *TestCase.py
     WORKING_DIRECTORY ${_test_src_dir}
     OUTPUT_VARIABLE _tests
+    RESULT_VARIABLE _res
+    ERROR_VARIABLE _err
     )
+  # message("RES: ${_res}")
+  # message("ERR: ${_err}")
+  # message("tests: ${_tests}")
   separate_arguments(_testlist UNIX_COMMAND ${_tests})
   # message( ${_testlist} )
   PYUNITTEST_ADD_TEST( ${_test_src_dir} ${_testname_prefix} ${_testlist} )

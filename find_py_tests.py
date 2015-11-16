@@ -3,41 +3,29 @@
 import fnmatch, os, sys
 
 def main():
-    for f, m in iterModules(*sys.argv[1:]):
-        if skip(m): continue
+    for f in iter_files(*sys.argv[1:]):
+        if skip(f): continue
         print f
         continue
     return
 
-def skip(m):
-    return getattr(m, 'skip', None) or getattr(m, 'long_test', None)
-
-
-def iterModules(path, pattern):
-    for f in iter_files(path, pattern):
-        m = _importModule(f)
-        yield f, m
+def skip(f):
+    lines = open(f).readlines()
+    for line in lines:
+        if line.startswith("skip"):
+            if get_value(line, 'skip'): return True
+        elif line.startswith("long_test"):
+            if get_value(line, 'long_test'): return True
         continue
     return
 
 
-def _importModule(path):
-    dir = os.path.dirname(path)
-    filename = os.path.basename(path)
-    name = filename[:-3]
-    _restore = list(sys.path)
-    sys.path = [dir] + sys.path
-    try:
-        exec 'import %s as m' % name
-    except:
-        import traceback
-        tb = traceback.format_exc()
-        raise ImportError, 'failed to import %s. traceback:\n%s' % (name, tb)
-    reload(m)
-    sys.path = _restore
-    return m
+def get_value(line, key):
+    d = {}
+    exec(line, d)
+    return d.get(key)
 
-
+    
 def iter_files(path, pattern):
     matches = []
     for root, dirnames, filenames in os.walk(path):
