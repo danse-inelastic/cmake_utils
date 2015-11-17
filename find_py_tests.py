@@ -10,6 +10,7 @@ def main():
     return
 
 def skip(f):
+    if "obsolete" in f: return True
     lines = open(f).readlines()
     for line in lines:
         if line.startswith("skip"):
