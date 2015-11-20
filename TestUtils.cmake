@@ -1,5 +1,11 @@
 # requires: Dirs.cmake
 # python unit tests
+#  macro to add all tests given in the argument list 
+#  (after the arguments _test_src_dir and _testname_prefix)
+#  * _test_src_dir:
+#    the prefix directory used to prepend to the given filenames
+#  * _testname_prefix:
+#    prefix of test name
 macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
   # Add all of the individual tests so that they can be run in parallel
   foreach ( part ${ARGN} )
@@ -20,6 +26,11 @@ macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
   endforeach ( part ${ARGN} )
 endmacro ( PYUNITTEST_ADD_TEST )
 
+#  macro to add all tests in the given directory
+#  * _test_src_dir:
+#     the directory where tests live. must be absolute path
+#  * _testname_prefix: 
+#     prefix of test names generated
 macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
   message("-- PYUNITTEST_ADD_TESTS_IN_DIR: ${_test_src_dir} ${_testname_prefix}")
   execute_process(
@@ -37,6 +48,8 @@ macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
   # message( ${_testlist} )
   PYUNITTEST_ADD_TEST( ${_test_src_dir} ${_testname_prefix} ${_testlist} )
 endmacro ( PYUNITTEST_ADD_TESTS_IN_DIR )
+
+
 
 
 # c tests
