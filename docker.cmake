@@ -1,7 +1,5 @@
 # docker folder for build and test packaging artifacts
-execute_process(
-  COMMAND rm -rf docker
-  COMMAND git clone https://github.com/danse-inelastic/packaging-use-docker docker
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  )
+include(GitUtils)
+
+UPDATE_PACKAGE_FROM_GIT(${CMAKE_SOURCE_DIR} docker https://github.com/danse-inelastic/packaging-use-docker docker)
 add_subdirectory(docker)
