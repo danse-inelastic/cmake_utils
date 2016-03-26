@@ -3,6 +3,7 @@
 # _pkg: name of package
 # _giturl: git url of the package
 macro ( UPDATE_PACKAGE_FROM_GIT _dir _pkg _giturl )
+  message("-- UPDATE_PACKAGE_FROM_GIT: ${_pkg} at %{_dir} from ${_giturl}")
   IF(EXISTS "${_dir}/${_pkg}")
     execute_process(
       COMMAND git pull
