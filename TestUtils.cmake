@@ -1,4 +1,12 @@
 # requires: Dirs.cmake
+# for 2.8.11- compatibility
+macro ( GET_PARENT_DIR _dir _path )
+  IF ( ${CMAKE_MAJOR_VERSION} VERSION_LESS "2.8.12" )
+    get_filename_component( ${_dir} ${_path} PATH )
+  ELSE ()
+    get_filename_component( ${_dir} ${_path} DIRECTORY )
+  ENDIF ()
+endmacro ( GET_PARENT_DIR )
 # python unit tests
 #  macro to created test rules for all tests given in the argument list 
 #  (after the arguments _test_src_dir and _testname_prefix)
@@ -12,7 +20,7 @@ macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
     # message( ${part} )
     get_filename_component( _filename ${part} NAME )
     get_filename_component( _suitename ${part} NAME_WE )
-    get_filename_component( _directory ${part} DIRECTORY )
+    GET_PARENT_DIR( _directory ${part} )
     string(SUBSTRING ${_directory} 1 -1 _dir) # remove the leading "."
     set ( _pyunit_separate_name "${_testname_prefix}${_dir}/${_suitename}" )
     # message( "name: ${_pyunit_separate_name}, cmd:${PYTHON_EXECUTABLE} -B ${_filename}, workdir:  ${_test_src_dir}/${_directory}" )
