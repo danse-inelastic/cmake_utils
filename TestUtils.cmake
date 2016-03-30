@@ -1,7 +1,7 @@
 # requires: Dirs.cmake
 # for 2.8.11- compatibility
 macro ( GET_PARENT_DIR _dir _path )
-  IF ( ${CMAKE_MAJOR_VERSION} VERSION_LESS "2.8.12" )
+  IF ( ${CMAKE_VERSION} VERSION_LESS "2.8.12" )
     get_filename_component( ${_dir} ${_path} PATH )
   ELSE ()
     get_filename_component( ${_dir} ${_path} DIRECTORY )
@@ -66,7 +66,7 @@ function ( CUNITTEST_ADD_TESTS  _test_name_prefix _link_libs _deps)
   foreach( _src ${SRC_FILES} )
     get_filename_component( _filename ${_src} NAME )
     get_filename_component( _exe ${_src} NAME_WE )
-    get_filename_component( _directory ${_src} DIRECTORY )
+    GET_PARENT_DIR( _directory ${_src} )
     set(_target_path ${_directory}/${_exe})
     string(REPLACE "/" "_" _target_name ${_target_path})
     # file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${_directory})
