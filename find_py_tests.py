@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import fnmatch, os, sys
 
 def main():
     for f in iter_files(*sys.argv[1:]):
         if skip(f): continue
-        print f
+        print(f)
         continue
     return
 

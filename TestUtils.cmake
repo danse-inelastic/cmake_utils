@@ -49,11 +49,11 @@ macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
     RESULT_VARIABLE _res
     ERROR_VARIABLE _err
     )
-  # message("RES: ${_res}")
-  # message("ERR: ${_err}")
-  # message("tests: ${_tests}")
+  message("RES: ${_res}")
+  message("ERR: ${_err}")
+  message("tests: ${_tests}")
   separate_arguments(_testlist UNIX_COMMAND ${_tests})
-  # message( ${_testlist} )
+  message( ${_testlist} )
   PYUNITTEST_ADD_TEST( ${_test_src_dir} ${_testname_prefix} ${_testlist} )
 endmacro ( PYUNITTEST_ADD_TESTS_IN_DIR )
 

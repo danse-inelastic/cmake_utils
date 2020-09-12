@@ -27,6 +27,8 @@ def get_version_from_git():
     if p.returncode != 0:
         raise RuntimeError("cmd %r failed" % ' '.join(args))
     # output is like 1.0-31-ge63953d
+    if sys.version_info>=(3,0):
+        stdout = stdout.decode()
     ver = stdout.strip().split('-')[0]
     return ver
 
