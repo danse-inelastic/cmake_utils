@@ -50,12 +50,14 @@ macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
       RESULT_VARIABLE _res
       ERROR_VARIABLE _err
     )
-    message("RES: ${_res}")
-    message("ERR: ${_err}")
-    message("tests: ${_tests}")
+    message(STATUS "RES: ${_res}")
+    message(STATUS "ERR: ${_err}")
+    message(STATUS "tests: ${_tests}")
     separate_arguments(_testlist UNIX_COMMAND ${_tests})
-    message( ${_testlist} )
+    # message(STATUS  ${_testlist} )
     PYUNITTEST_ADD_TEST( ${_test_src_dir} ${_testname_prefix} ${_testlist} )
+  ELSE (EXISTS ${_test_src_dir})
+    message(AUTHOR_WARNING ${_test_src_dir} Does not exist)
   ENDIF (EXISTS ${_test_src_dir})
 endmacro ( PYUNITTEST_ADD_TESTS_IN_DIR )
 
