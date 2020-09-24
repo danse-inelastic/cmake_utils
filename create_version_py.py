@@ -41,7 +41,10 @@ def get_git_revision():
     stdout = p.communicate()[0]
     if p.returncode != 0:
         raise RuntimeError("cmd %r failed" % ' '.join(args))
-    return stdout.strip()
+    s = stdout.strip()
+    if sys.version_info >= (3,0) and isinstance(s, bytes):
+        s = s.decode()
+    return s
 
 
 def main():
